@@ -1,13 +1,16 @@
 import warnings
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import platform
 
 warnings.filterwarnings("ignore")
+pathWindows = 'C:/Users/Pc/PycharmProjects/TCC/dataset/'
+pathLinux = '/home/gianluca/Documentos/Projetos/Pycharm Projects/TCC_IA/dataset/'
+path = pathLinux if platform.system() == 'Linux' else pathWindows
 
 # read csv (comma separated value) into data
-data = pd.read_csv('C:/Users/Pc/PycharmProjects/TCC/dataset/pdbbind-2007-refined-core-yx36i.csv')
+data = pd.read_csv(path + 'pdbbind-2007-refined-core-yx36i.csv')
 plt.style.use('ggplot')
 sns.countplot(x="PDB", data=data)
 data.loc[:, 'PDB'].value_counts()
