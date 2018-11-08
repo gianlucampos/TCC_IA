@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import platform
+from sklearn.preprocessing import LabelEncoder
 
 warnings.filterwarnings("ignore")
 pathWindows = 'C:/Users/Pc/PycharmProjects/TCC/dataset/'
@@ -11,8 +12,11 @@ path = pathLinux if platform.system() == 'Linux' else pathWindows
 
 # read csv (comma separated value) into data
 data = pd.read_csv(path + 'pdbbind-2007-refined-core-yx36i.csv')
+# le = LabelEncoder()
+# le.fit(data['PDB'].astype(str))
+# data['PDB'] = le.transform(data['PDB'].astype(str))
 plt.style.use('ggplot')
-sns.countplot(x="PDB", data=data)
+# sns.countplot(x="PDB", data=data)
 data.loc[:, 'PDB'].value_counts()
 
 # KNN
@@ -29,14 +33,22 @@ prediction = knn.predict(x)
 print('Prediction: {}'.format(prediction))
 print(knn.score(x, y))
 
-# Printando Gráficos e Valores dos DataFrames
-df = pd.DataFrame(prediction)
-df.index.name = 'ID'
-df.columns = ['PDB']
-df.to_csv('results.csv', header=True)
-df2 = pd.DataFrame(df['PDB'].value_counts())
-df2.index.name = 'PDB'
-df2.columns = ['COUNT']
-bigdata = pd.merge(df, df2, on="PDB")
+# Printando Predição
+predicao = pd.DataFrame(prediction)
+predicao.index.name = 'ID'
+predicao.columns = ['PDB']
+print(predicao)
+# df.to_csv('results.csv', header=True)
 
-sns.lmplot(x='PDB', y='COUNT', data=bigdata)
+# Printando a frequência de PDB's
+# n_ocorrencias = pd.DataFrame(predicao['PDB'].value_counts())
+# n_ocorrencias.index.name = 'PDB'
+# n_ocorrencias.columns = ['COUNT']
+# bigdata = pd.merge(predicao, n_ocorrencias, on="PDB")
+# bigdata = bigdata.drop_duplicates(keep='first')
+# bigdata['PDB'] = le.inverse_transform(bigdata['PDB'])
+# print(bigdata)
+
+# sns.countplot(x='PDB', data=bigdata)
+# plt.show()
+

@@ -14,10 +14,14 @@ based on information provided in the labeled training data set. The two data set
 # import libraries
 import pandas as pd
 import numpy as np
+import platform
 
 # import data frames
-dftrain = pd.read_csv('/home/gianluca/Documentos/Projetos/Pycharm Projects/TCC/dataset/train_titanic.csv')
-dftest = pd.read_csv('/home/gianluca/Documentos/Projetos/Pycharm Projects/TCC/dataset/test_titanic.csv')
+pathWindows = 'C:/Users/Pc/PycharmProjects/TCC/dataset/'
+pathLinux = '/home/gianluca/Documentos/Projetos/Pycharm Projects/TCC_IA/dataset/'
+path = pathLinux if platform.system() == 'Linux' else pathWindows
+dftrain = pd.read_csv(path + 'train_titanic.csv')
+dftest = pd.read_csv(path + 'test_titanic.csv')
 
 # Combine Training and Test data for easy manipulation
 # move Survived column to front of trian

@@ -10,8 +10,13 @@ from matplotlib import pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn import svm, linear_model
+import platform
 
 warnings.filterwarnings("ignore")
+
+pathWindows = 'C:/Users/Pc/PycharmProjects/TCC/dataset/'
+pathLinux = '/home/gianluca/Documentos/Projetos/Pycharm Projects/TCC_IA/dataset/'
+path = pathLinux if platform.system() == 'Linux' else pathWindows
 
 # Parâmetros
 
@@ -29,7 +34,7 @@ warnings.filterwarnings("ignore")
 # Label
 # PDB
 
-dataset = pd.read_csv('dataset/pdbbind-2007-refined-core-yx36i.csv')
+dataset = pd.read_csv(path + 'pdbbind-2007-refined-core-yx36i.csv')
 le = LabelEncoder()
 le.fit(dataset['PDB'].astype(str))
 dataset['PDB'] = le.transform(dataset['PDB'].astype(str))
@@ -66,7 +71,7 @@ print(score)
 # ==============================================================================
 # TestePDB:
 
-test_data = pd.read_csv('dataset/pdbbind-2007-core-yx36i.csv')
+test_data = pd.read_csv(path + 'pdbbind-2007-core-yx36i.csv')
 le.fit(test_data['PDB'].astype(str))
 test_data['PDB'] = le.transform(test_data['PDB'].astype(str))
 
