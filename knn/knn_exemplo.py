@@ -25,7 +25,7 @@ print('Without Test Split, Score: ', knn.score(x, y))
 # train test split
 from sklearn.model_selection import train_test_split
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=1)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0)
 knn = KNeighborsClassifier(n_neighbors=3)
 x, y = data.loc[:, data.columns != 'class'], data.loc[:, 'class']
 knn.fit(x_train, y_train)

@@ -52,3 +52,11 @@ print(predicao)
 # sns.countplot(x='PDB', data=bigdata)
 # plt.show()
 
+# train test split
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=1)
+knn.fit(x_train, y_train)
+prediction = knn.predict(x_test)
+# print('Prediction: {}'.format(prediction))
+print('With KNN (K=3) accuracy is: ', knn.score(x_test, y_test))  # accuracy
