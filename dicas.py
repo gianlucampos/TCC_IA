@@ -1,20 +1,19 @@
+# Manter estes imports por padrão
 import warnings
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import platform
 from sklearn.preprocessing import LabelEncoder
 
+# Caminho para datasets
 warnings.filterwarnings("ignore")
 pathWindows = 'C:/Users/Pc/PycharmProjects/TCC/dataset/'
 pathLinux = '/home/gianluca/Documentos/Projetos/Pycharm Projects/TCC_IA/dataset/'
 path = pathLinux if platform.system() == 'Linux' else pathWindows
+dataTrain = pd.read_csv(path + 'pdbbind-2007-refined-core-yx36i.csv')
 
-data = pd.read_csv(path + 'pdbbind-2007-refined-core-yx36i.csv')
 le = LabelEncoder()
-le.fit(data['PDB'].astype(str))
-data['PDB'] = le.transform(data['PDB'].astype(str))
-print(data.head())
-data['PDB'] = le.inverse_transform(data['PDB'])
-print(data.head())
-
+le.fit(dataTrain['PDB'].astype(str))
+dataTrain['PDB'] = le.transform(dataTrain['PDB'].astype(str))
+print(dataTrain.head())
+dataTrain['PDB'] = le.inverse_transform(dataTrain['PDB'])
+print(dataTrain.head())
