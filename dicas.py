@@ -17,3 +17,8 @@ dataTrain['PDB'] = le.transform(dataTrain['PDB'].astype(str))
 print(dataTrain.head())
 dataTrain['PDB'] = le.inverse_transform(dataTrain['PDB'])
 print(dataTrain.head())
+
+a = 5
+b = a
+c = a[:]
+

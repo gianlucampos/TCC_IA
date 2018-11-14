@@ -24,24 +24,12 @@ params, labels = dataset_Train.loc[:, dataset_Train.columns != 'pbindaff'], data
 
 X_train, X_test, Y_train, Y_test = train_test_split(params, labels, train_size=0.5, random_state=1)
 
-svc = svm.SVR()
+svc = svm.SVC()
 svc.fit(X_train, Y_train)
 y_pred = svc.predict(X_test)
 print('Accuracy Score: ')
 print(svc.score(Y_test, y_pred))
-
-lm = linear_model.LinearRegression()
-model = lm.fit(X_train, Y_train)
-predictions = lm.predict(X_test)
-
-print(predictions[0:5])
-plt.scatter(Y_test, predictions)
-plt.xlabel("True Values")
-plt.ylabel("Predictions")
-plt.show()
-print("Score Before FIT:", model.score(X_test, Y_test))
-
-# print(metrics.accuracy_score(Y_test, y_pred))
+print(metrics.accuracy_score(Y_test, y_pred))
 
 # svc = svm.SVC(kernel='linear')
 # svc.fit(X_train, Y_train)
