@@ -1,7 +1,8 @@
 # Manter estes imports por padrão
-import warnings
-import pandas as pd
 import platform
+import warnings
+
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 # Caminho para datasets
@@ -17,8 +18,3 @@ dataTrain['PDB'] = le.transform(dataTrain['PDB'].astype(str))
 print(dataTrain.head())
 dataTrain['PDB'] = le.inverse_transform(dataTrain['PDB'])
 print(dataTrain.head())
-
-a = 5
-b = a
-c = a[:]
-
