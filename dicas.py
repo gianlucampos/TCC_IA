@@ -18,3 +18,8 @@ dataTrain['PDB'] = le.transform(dataTrain['PDB'].astype(str))
 print(dataTrain.head())
 dataTrain['PDB'] = le.inverse_transform(dataTrain['PDB'])
 print(dataTrain.head())
+
+mylist = []
+mylist.append(12)
+mylist.append(12)
+print(mylist)

@@ -5,8 +5,10 @@ import numpy as np
 import pandas as pd
 from sklearn import svm
 from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import mean_squared_error
 from matplotlib import pyplot as plt
 from matplotlib import style
+from math import sqrt
 
 style.use("ggplot")
 
@@ -66,8 +68,8 @@ print('Resposta Correta: ', y)
 # clf = svm.SVR(kernel='rbf')
 # clf = svm.SVR(kernel='sigmoid')
 
-clf = svm.SVR(kernel='rbf', degree=3, gamma=0.00001, coef0=0.0, tol=0.001, C=1.0, epsilon=0.1, shrinking=True,
-              cache_size=200, verbose=False)
+
+clf = svm.SVR(kernel='rbf', gamma=0.00001, C=5.1, epsilon=0.001)
 
 # Treinando SVM
 clf.fit(x, y)
@@ -78,12 +80,17 @@ print('Score: ', clf.score(x, y))
 fim = timeit.default_timer()
 print('Tempo: %f segundos' % (fim - inicio))
 
+y_pred = clf.predict(x)
+mse = mean_squared_error(y, y_pred, multioutput='raw_values')
+print('RMSE', sqrt(mse))
+
 # Plotando os Resultados
+plt.subplot(1, 2, 1)
 plt.scatter(y, y, label="Afinidade Correta")
 plt.scatter(y, clf.predict(x), label="Afinidade Prevista")
-plt.legend()
 plt.title('Treino')
-plt.show()
+plt.legend()
+# plt.show()
 # =========================================================================================
 # Balanceamento de base com train_test_split ou k-fold validation
 # print('=' * 240)
@@ -100,12 +107,18 @@ x_test = np.array(params_test.values)
 y_test = np.array(labels_test.values.tolist())
 
 # print('Informação: ', x_test[0].tolist())
-print('Resposta Correta: ', y_test)
-print('Predição: ', clf.predict(x_test))
+# print('Resposta Correta: ', y_test)
+# print('Predição: ', clf.predict(x_test))
 print('Score: ', clf.score(x_test, y_test))
 
-plt.scatter(y, y, label="Afinidade Correta")
-plt.scatter(y, clf.predict(x), label="Afinidade Prevista")
+y_pred = clf.predict(x_test)
+mse = mean_squared_error(y_test, y_pred, multioutput='raw_values')
+print('RMSE', sqrt(mse))
+
+plt.subplot(1, 2, 2)
+plt.scatter(y_test, y_test, label="Afinidade Correta")
+plt.scatter(y_test, clf.predict(x_test), label="Afinidade Prevista")
+plt.title('Teste')
 plt.legend()
-plt.title('Treino')
 plt.show()
+print('=' * 240)
