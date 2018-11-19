@@ -49,9 +49,6 @@ params, labels = dataset_Train.loc[:, dataset_Train.columns != 'pbindaff'], data
 x = np.array(params.values)
 y = np.array(labels.values.tolist())
 
-# print('Informação: ', x[0].tolist())
-print('Resposta Correta: ', y)
-
 # Criando Classificador SVM (para testar comente descomentar um)
 # clf = svm.SVC(kernel='linear')
 # clf = svm.SVC(kernel='poly')
@@ -74,12 +71,12 @@ clf = svm.SVR(kernel='rbf', gamma=0.00001, C=5.1, epsilon=0.001)
 # Treinando SVM
 clf.fit(x, y)
 
-# Predizendo e Medindo resultado
+# Predizendo e avaliando resultados
+print('Resposta Correta: ', y)
 print('Predição: ', clf.predict(x))
 print('Score: ', clf.score(x, y))
 fim = timeit.default_timer()
 print('Tempo: %f segundos' % (fim - inicio))
-
 y_pred = clf.predict(x)
 mse = mean_squared_error(y, y_pred, multioutput='raw_values')
 print('RMSE', sqrt(mse))
@@ -87,7 +84,7 @@ print('RMSE', sqrt(mse))
 # Plotando os Resultados
 plt.subplot(1, 2, 1)
 plt.scatter(y, y, label="Afinidade Correta")
-plt.scatter(y, clf.predict(x), label="Afinidade Prevista")
+plt.scatter(clf.predict(x), y, label="Afinidade Prevista")
 plt.title('Treino')
 plt.legend()
 # plt.show()
@@ -106,18 +103,16 @@ params_test, labels_test = dataset_Test.loc[:, dataset_Test.columns != 'pbindaff
 x_test = np.array(params_test.values)
 y_test = np.array(labels_test.values.tolist())
 
-# print('Informação: ', x_test[0].tolist())
-# print('Resposta Correta: ', y_test)
-# print('Predição: ', clf.predict(x_test))
+print('Resposta Correta: ', y_test)
+print('Predição: ', clf.predict(x_test))
 print('Score: ', clf.score(x_test, y_test))
-
 y_pred = clf.predict(x_test)
 mse = mean_squared_error(y_test, y_pred, multioutput='raw_values')
 print('RMSE', sqrt(mse))
 
 plt.subplot(1, 2, 2)
 plt.scatter(y_test, y_test, label="Afinidade Correta")
-plt.scatter(y_test, clf.predict(x_test), label="Afinidade Prevista")
+plt.scatter(clf.predict(x_test), y_test, label="Afinidade Prevista")
 plt.title('Teste')
 plt.legend()
 plt.show()
