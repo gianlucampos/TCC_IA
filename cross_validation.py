@@ -14,6 +14,8 @@ for train_index, test_index in kf.split(X):
     X_train, X_test = X[train_index], X[test_index]
     y_train, y_test = y[train_index], y[test_index]
 
+    print("TRAIN:", train_index, "TEST:", test_index)
+
 print("Train X-Y")
 print(X_train, y_train)
 print("Test X-Y")
@@ -26,4 +28,3 @@ print(X_test, y_test)
 # plt.scatter(y, predictions)
 # accuracy = metrics.r2_score(y, predictions)
 # print “Cross-Predicted Accuracy:”, accuracy
-#

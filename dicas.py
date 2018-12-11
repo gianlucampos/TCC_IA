@@ -1,7 +1,6 @@
 # Manter estes imports por padrão
 import platform
 import warnings
-
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
@@ -32,9 +31,19 @@ dataTrain = pd.read_csv(path + 'pdbbind-2007-refined-core-yx36i.csv')
 # dataset2 = pd.read_csv('pdbbind-2007-refined-full.csv', index_col=0)
 # dataset2.to_csv('pdbbind-2007-refidasdasned-full.csv', header=True)
 
-gama = 0.001
-divisor = 10
-for i in range(10):
-    print(i)
-    gama = gama / divisor
-    print('Gamma: ', gama)
+# Salvando o modelo svm em um arquivo para testa-lo depois
+from sklearn import svm
+from sklearn import datasets
+
+# clf = svm.SVC()
+iris = datasets.load_iris()
+X, y = iris.data, iris.target
+# clf.fit(X, y)
+# print(clf.score(X, y))
+
+from joblib import dump, load
+
+# dump(clf, 'filename.svm')  # Escreve modelo
+clf3 = load('filename.Svm')  # Lê modelo
+print(clf3.score(X, y))
+
