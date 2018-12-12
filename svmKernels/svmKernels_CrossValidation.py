@@ -39,34 +39,33 @@ y = np.array(labels.values.tolist())
 # Definindo modelo SVM com regressão e parâmetros do kernel rbf
 clf = svm.SVR(kernel='rbf', gamma=0.00001, C=100, epsilon=0.001)
 
+# Para
 # Múltiplos de 1300: 1, 2, 4, 5, 10, 13, 20, 25, 26, 50, 52, 65, 100, 130, 260, 325, 650, 1300
-kn = 2
-i = 0
-# Aplicando K-Fold
-kf = KFold(n_splits=kn)
-total_rme = 0
-for train_index, test_index in kf.split(x):
-    x_train, x_test = x[train_index], x[test_index]
-    y_train, y_test = y[train_index], y[test_index]
-
+kn_values = [2, 4, 5, 10, 13, 20, 25, 26, 50, 52, 65, 100, 130, 260, 325, 650, 1300]
+for i in range(17):
+    kn = kn_values[i]
+    print('K = ', kn)
+    # Aplicando K-Fold
+    kf = KFold(n_splits=kn, random_state=True, shuffle=True)
     # Avaliando tempo de treino e teste
     inicio = timeit.default_timer()
+    for train_index, test_index in kf.split(x):
+        x_train, x_test = x[train_index], x[test_index]
+        y_train, y_test = y[train_index], y[test_index]
 
-    # Treinando SVM
-    clf.fit(x_train, y_train)
+        # Treinando SVM
+        clf.fit(x_train, y_train)
+
+    y_pred = clf.predict(x_train)
+    mse = metrics.mean_squared_error(y_train, y_pred, multioutput='uniform_average')
+    print('RMSE Treino: ', sqrt(mse))
 
     # Teste
-    print('-' * 240)
-    print('TESTE, com Cross Validation')
-
     # Predizendo e avaliando resultados da primeira amostra
-    print('Resposta Correta: ', y_test[0])
-    print('Predição: ', clf.predict([x_test[0]]))
-    fim = timeit.default_timer()
-    print('Tempo: %f segundos' % (fim - inicio))
     y_pred = clf.predict(x_test)
     mse = metrics.mean_squared_error(y_test, y_pred, multioutput='uniform_average')
-    total_rme = mse
-# Média do RMSE:
-# https://stats.stackexchange.com/questions/85507/what-is-the-rmse-of-k-fold-cross-validation
-print('RMSE Médio', sqrt(total_rme / kn))
+    print('RMSE Teste: ', sqrt(mse))
+    fim = timeit.default_timer()
+    print('Tempo: %f segundos' % (fim - inicio))
+    print(clf.score(x_test, y_test))
+    print('-' * 240)
